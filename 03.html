@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{margin: 0; padding: 0;}
+        ul,li{list-style: none;}
+        a{text-decoration: none;}
+
+        /* header */
+        .wrapper > div{
+            height: 100vh;
+            overflow: hidden;
+        }
+        .wrapper > div#header{
+            background-color: aqua;
+        }
+
+        .wrapper > div#page1{
+            background-color: rgb(25, 152, 152);
+        }
+        
+        .wrapper > div#page2{
+            background-color: rgb(116, 64, 200);
+        }
+
+        #header > div{
+            float: left;
+            margin: 50px 20px;
+            padding: 10px;
+            width: 300px;
+            height: 300px;
+            font-size: 14px;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.5s;
+        }
+        #header.active > div{
+            transform: translateY(0px);
+            opacity: 1;
+        }
+        #header .type1{
+            transition-delay: 0;
+        }
+        #header .type2{
+            transition-delay: 0.5s;
+        }
+        #header .type3{
+            transition-delay: 1s;
+        }
+
+
+        /* page1 */
+        #page1 > div{
+            float: left;
+            margin: 50px 20px;
+            padding: 10px;
+            width: 300px;
+            height: 300px;
+            font-size: 14px;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.5s;
+        }
+        #page1.active > div{
+            transform: translateY(0px);
+            opacity: 1;
+        }
+        #page1 .type1{
+            transition-delay: 0;
+        }
+        #page1 .type2{
+            transition-delay: 0.5s;
+        }
+        #page1 .type3{
+            transition-delay: 1s;
+        }
+        /* page2 */
+        #page2 > div{
+            float: left;
+            margin: 50px 20px;
+            padding: 10px;
+            width: 300px;
+            height: 300px;
+            font-size: 14px;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.5s;
+        }
+        #page2.active > div{
+            transform: translateY(0px);
+            opacity: 1;
+        }
+        #page2 .type1{
+            transition-delay: 0;
+        }
+        #page2 .type2{
+            transition-delay: 0.5s;
+        }
+        #page2 .type3{
+            transition-delay: 1s;
+        }
+    </style>
+    <script>
+        window.addEventListener('load',() =>{
+            //문서 객체를 추출
+            const wrapper = document.getElementsByClassName('wrapper')[0]
+            const contents = wrapper.children;
+            let t= window.pageYOffset; //윈도우 상단 위치 변수
+            const offsety = []; //위치 이동 배열
+            let n = 0;//contents의 인덱스값
+
+            //offsety배열에 각각 contents의 top값을 저장
+            for(let i = 0; i < contents.length; i++){
+                offsety.push(contents[i].offsetTop);
+            }
+
+            contents[n].classList.add('active');
+            window.addEventListener('scroll',scrollHandler);
+
+            function scrollHandler(){
+                const timer = setTimeout(function(){
+                    clearInterval(timer)
+                    t= window.pageYOffset;
+                    // console.log(`현재 창에 세로 좌표값 :${t}`)
+                    if(t < offsety[1]){
+                        n = 0;
+                    }else if(t < offsety[2]){
+                        n = 1;
+                        if(t == (document.body.clientHeight-Window.innerHeight)){
+                            n=2;
+                        }
+                    }else{
+                        n = 2;
+                    }
+                    for(let j = 0; j < contents.length; j++){
+                    if(j == n)
+                    contents[j].classList.add('active');
+                    }
+                },10)
+            }
+        })
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="header">
+            <div class="type1">type1</div>
+            <div class="type1">type2</div>
+            <div class="type1">type3</div>
+        </div>
+        <div id="page1">
+            <div class="type1">type1</div>
+            <div class="type1">type2</div>
+            <div class="type1">type3</div>
+        </div>
+        <div id="page2">
+            <div class="type1">type1</div>
+            <div class="type1">type2</div>
+            <div class="type1">type3</div>
+        </div>
+    </div>
+</body>
+</html>
